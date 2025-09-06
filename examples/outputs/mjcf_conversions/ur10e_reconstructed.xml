@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<mujoco model="ur10e">
+  <compiler angle="radian" autolimits="true"/>
+  <option integrator="implicitfast"/>
+  <asset/>
+  <worldbody>
+    <body name="base">
+      <inertial mass="4.0" pos="0.0 0.0 0.0" diaginertia="0.0061063308908 0.0061063308908 0.01125"/>
+      <body name="shoulder_link" pos="0.0 0.0 0.181" quat="1 0 0 0">
+        <joint name="shoulder_pan_joint" axis="0.0 0.0 1.0"/>
+        <inertial mass="7.778" pos="0.0 0.0 0.0" diaginertia="0.0314743 0.0314743 0.0218756"/>
+        <body name="upper_arm_link" pos="0.0 0.176 0.0" quat="1.0 0.0 1.0 0.0">
+          <joint name="shoulder_lift_joint" axis="0.0 1.0 0.0"/>
+          <inertial mass="12.93" pos="0.0 0.0 0.3065" diaginertia="0.423074 0.423074 0.0363656"/>
+          <body name="forearm_link" pos="0.0 -0.137 0.613" quat="1 0 0 0">
+            <joint name="elbow_joint" axis="0.0 1.0 0.0"/>
+            <inertial mass="3.87" pos="0.0 0.0 0.2855" diaginertia="0.11059 0.11059 0.0108844"/>
+            <body name="wrist_1_link" pos="0.0 0.0 0.571" quat="1.0 0.0 1.0 0.0">
+              <joint name="wrist_1_joint" axis="0.0 1.0 0.0"/>
+              <inertial mass="1.96" pos="0.0 0.135 0.0" diaginertia="0.0055125 0.00510825 0.00510825"/>
+              <body name="wrist_2_link" pos="0.0 0.135 0.0" quat="1 0 0 0">
+                <joint name="wrist_2_joint" axis="0.0 0.0 1.0"/>
+                <inertial mass="1.96" pos="0.0 0.0 0.12" diaginertia="0.0055125 0.00510825 0.00510825"/>
+                <body name="wrist_3_link" pos="0.0 0.0 0.12" quat="1 0 0 0">
+                  <joint name="wrist_3_joint" axis="0.0 1.0 0.0"/>
+                  <inertial mass="0.202" pos="0.0 0.092 0.0" diaginertia="0.000204525 0.000144346 0.000144346"/>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+</mujoco>

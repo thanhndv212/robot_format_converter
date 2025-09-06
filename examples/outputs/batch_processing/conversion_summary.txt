@@ -1,0 +1,24 @@
+MJCF Batch Conversion Summary
+========================================
+
+Total files processed: 3
+Successful conversions: 3
+Failed conversions: 0
+Success rate: 100.0%
+Total processing time: 0.02 seconds
+Average time per file: 0.007 seconds
+
+File Size Summary:
+--------------------
+Original MJCF files: 9,686 bytes
+Generated schemas: 6,449 bytes
+Generated URDFs: 6,064 bytes
+
+Successful Conversions:
+-------------------------
+  ✓ ur10e_reconstructed.xml (ur10e)
+    Time: 0.010s, Issues: 0
+  ✓ scene.xml (ur10e_scene)
+    Time: 0.002s, Issues: 0
+  ✓ ur10e.xml (ur10e)
+    Time: 0.009s, Issues: 0

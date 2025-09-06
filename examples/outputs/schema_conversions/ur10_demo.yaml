@@ -1,0 +1,363 @@
+metadata:
+  name: ur10
+  version: '1.0'
+  description: 'Converted from URDF: ur10_robot.urdf'
+  source_format: urdf
+links:
+- name: base_link
+  mass: 4.0
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.0
+  inertia:
+    ixx: 0.0061063308908
+    iyy: 0.0061063308908
+    izz: 0.01125
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+- name: shoulder_link
+  mass: 7.778
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.0
+  inertia:
+    ixx: 0.0314743125769
+    iyy: 0.0314743125769
+    izz: 0.021875625
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+- name: upper_arm_link
+  mass: 12.93
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.306
+  inertia:
+    ixx: 0.421753803798
+    iyy: 0.421753803798
+    izz: 0.036365625
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+- name: forearm_link
+  mass: 3.87
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.28615
+  inertia:
+    ixx: 0.111069694097
+    iyy: 0.111069694097
+    izz: 0.010884375
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+- name: wrist_1_link
+  mass: 1.96
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.0
+  inertia:
+    ixx: 0.0051082479567
+    iyy: 0.0051082479567
+    izz: 0.0055125
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+- name: wrist_2_link
+  mass: 1.96
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.0
+  inertia:
+    ixx: 0.0051082479567
+    iyy: 0.0051082479567
+    izz: 0.0055125
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+- name: wrist_3_link
+  mass: 0.202
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.0
+  inertia:
+    ixx: 0.000526462289415
+    iyy: 0.000526462289415
+    izz: 0.000568125
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+- name: ee_link
+  mass: 0.0
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.0
+  inertia:
+    ixx: 0.0
+    iyy: 0.0
+    izz: 0.0
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+- name: base
+  mass: 0.0
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.0
+  inertia:
+    ixx: 0.0
+    iyy: 0.0
+    izz: 0.0
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+- name: tool0
+  mass: 0.0
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.0
+  inertia:
+    ixx: 0.0
+    iyy: 0.0
+    izz: 0.0
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+- name: world
+  mass: 0.0
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.0
+  inertia:
+    ixx: 0.0
+    iyy: 0.0
+    izz: 0.0
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+joints:
+- name: shoulder_pan_joint
+  type: revolute
+  parent_link: base_link
+  child_link: shoulder_link
+  pose:
+    position:
+    - 0.0
+    - 0.0
+    - 0.1273
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 1.0
+  axis:
+  - 0.0
+  - 0.0
+  - 1.0
+  limits:
+    lower: -6.28318530718
+    upper: 6.28318530718
+    effort: 330.0
+    velocity: 2.16
+- name: shoulder_lift_joint
+  type: revolute
+  parent_link: shoulder_link
+  child_link: upper_arm_link
+  pose:
+    position:
+    - 0.0
+    - 0.220941
+    - 0.0
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 1.0
+  axis:
+  - 0.0
+  - 1.0
+  - 0.0
+  limits:
+    lower: -6.28318530718
+    upper: 6.28318530718
+    effort: 330.0
+    velocity: 2.16
+- name: elbow_joint
+  type: revolute
+  parent_link: upper_arm_link
+  child_link: forearm_link
+  pose:
+    position:
+    - 0.0
+    - -0.1719
+    - 0.612
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 1.0
+  axis:
+  - 0.0
+  - 1.0
+  - 0.0
+  limits:
+    lower: -3.14159265359
+    upper: 3.14159265359
+    effort: 150.0
+    velocity: 3.15
+- name: wrist_1_joint
+  type: revolute
+  parent_link: forearm_link
+  child_link: wrist_1_link
+  pose:
+    position:
+    - 0.0
+    - 0.0
+    - 0.5723
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 1.0
+  axis:
+  - 0.0
+  - 1.0
+  - 0.0
+  limits:
+    lower: -6.28318530718
+    upper: 6.28318530718
+    effort: 54.0
+    velocity: 3.2
+- name: wrist_2_joint
+  type: revolute
+  parent_link: wrist_1_link
+  child_link: wrist_2_link
+  pose:
+    position:
+    - 0.0
+    - 0.1149
+    - 0.0
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 1.0
+  axis:
+  - 0.0
+  - 0.0
+  - 1.0
+  limits:
+    lower: -6.28318530718
+    upper: 6.28318530718
+    effort: 54.0
+    velocity: 3.2
+- name: wrist_3_joint
+  type: revolute
+  parent_link: wrist_2_link
+  child_link: wrist_3_link
+  pose:
+    position:
+    - 0.0
+    - 0.0
+    - 0.1157
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 1.0
+  axis:
+  - 0.0
+  - 1.0
+  - 0.0
+  limits:
+    lower: -6.28318530718
+    upper: 6.28318530718
+    effort: 54.0
+    velocity: 3.2
+- name: ee_fixed_joint
+  type: fixed
+  parent_link: wrist_3_link
+  child_link: ee_link
+  pose:
+    position:
+    - 0.0
+    - 0.0922
+    - 0.0
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 1.0
+  axis:
+  - 0
+  - 0
+  - 1
+- name: base_link-base_fixed_joint
+  type: fixed
+  parent_link: base_link
+  child_link: base
+  pose:
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 1.0
+  axis:
+  - 0
+  - 0
+  - 1
+- name: wrist_3_link-tool0_fixed_joint
+  type: fixed
+  parent_link: wrist_3_link
+  child_link: tool0
+  pose:
+    position:
+    - 0.0
+    - 0.0922
+    - 0.0
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 1.0
+  axis:
+  - 0
+  - 0
+  - 1
+- name: world_joint
+  type: fixed
+  parent_link: world
+  child_link: base_link
+  pose:
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 1.0
+  axis:
+  - 0
+  - 0
+  - 1
+actuators: []
+sensors: []
+contacts: []

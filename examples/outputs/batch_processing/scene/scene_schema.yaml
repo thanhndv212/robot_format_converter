@@ -1,0 +1,23 @@
+metadata:
+  name: ur10e_scene
+  version: '1.0'
+  description: 'Converted from MJCF: scene.xml'
+  source_format: mjcf
+links:
+- name: world
+  mass: 0.0
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.0
+  inertia:
+    ixx: 0.0
+    iyy: 0.0
+    izz: 0.0
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+joints: []
+actuators: []
+sensors: []
+contacts: []

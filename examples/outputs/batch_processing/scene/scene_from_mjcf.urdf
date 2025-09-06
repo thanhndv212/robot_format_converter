@@ -1,0 +1,4 @@
+<?xml version="1.0" ?>
+<robot name="ur10e_scene">
+  <link name="world"/>
+</robot>

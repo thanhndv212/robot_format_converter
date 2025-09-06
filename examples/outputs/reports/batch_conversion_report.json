@@ -1,0 +1,61 @@
+{
+  "summary": {
+    "total_files": 3,
+    "successful_conversions": 3,
+    "failed_conversions": 0,
+    "success_rate": 1.0,
+    "total_conversion_time": 0.021036863327026367,
+    "average_conversion_time": 0.007012287775675456,
+    "total_original_size": 9686,
+    "total_schema_size": 6449,
+    "total_urdf_size": 6064
+  },
+  "successful_conversions": [
+    {
+      "mjcf_file": "/Users/thanhndv212/Develop/robot_format_converter/examples/mjcf_outputs/ur10e_reconstructed.xml",
+      "model_name": "ur10e",
+      "success": true,
+      "error": null,
+      "files_generated": [
+        "/Users/thanhndv212/Develop/robot_format_converter/examples/mjcf_batch_outputs/ur10e_reconstructed/ur10e_reconstructed_schema.yaml",
+        "/Users/thanhndv212/Develop/robot_format_converter/examples/mjcf_batch_outputs/ur10e_reconstructed/ur10e_reconstructed_from_mjcf.urdf"
+      ],
+      "conversion_time": 0.010120868682861328,
+      "original_size": 1883,
+      "schema_size": 3082,
+      "urdf_size": 2991,
+      "schema_issues": []
+    },
+    {
+      "mjcf_file": "/Users/thanhndv212/Develop/robot_format_converter/examples/universal_robots_ur10e/scene.xml",
+      "model_name": "ur10e_scene",
+      "success": true,
+      "error": null,
+      "files_generated": [
+        "/Users/thanhndv212/Develop/robot_format_converter/examples/mjcf_batch_outputs/scene/scene_schema.yaml",
+        "/Users/thanhndv212/Develop/robot_format_converter/examples/mjcf_batch_outputs/scene/scene_from_mjcf.urdf"
+      ],
+      "conversion_time": 0.0015180110931396484,
+      "original_size": 865,
+      "schema_size": 331,
+      "urdf_size": 82,
+      "schema_issues": []
+    },
+    {
+      "mjcf_file": "/Users/thanhndv212/Develop/robot_format_converter/examples/universal_robots_ur10e/ur10e.xml",
+      "model_name": "ur10e",
+      "success": true,
+      "error": null,
+      "files_generated": [
+        "/Users/thanhndv212/Develop/robot_format_converter/examples/mjcf_batch_outputs/ur10e/ur10e_schema.yaml",
+        "/Users/thanhndv212/Develop/robot_format_converter/examples/mjcf_batch_outputs/ur10e/ur10e_from_mjcf.urdf"
+      ],
+      "conversion_time": 0.00939798355102539,
+      "original_size": 6938,
+      "schema_size": 3036,
+      "urdf_size": 2991,
+      "schema_issues": []
+    }
+  ],
+  "failed_conversions": []
+}

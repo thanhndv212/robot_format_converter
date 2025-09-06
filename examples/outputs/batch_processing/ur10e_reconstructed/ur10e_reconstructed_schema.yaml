@@ -1,0 +1,222 @@
+metadata:
+  name: ur10e
+  version: '1.0'
+  description: 'Converted from MJCF: ur10e_reconstructed.xml'
+  source_format: mjcf
+links:
+- name: world
+  mass: 0.0
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.0
+  inertia:
+    ixx: 0.0
+    iyy: 0.0
+    izz: 0.0
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+- name: base
+  mass: 4.0
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.0
+  inertia:
+    ixx: 0.0061063308908
+    iyy: 0.0061063308908
+    izz: 0.01125
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+- name: shoulder_link
+  mass: 7.778
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.0
+  inertia:
+    ixx: 0.0314743
+    iyy: 0.0314743
+    izz: 0.0218756
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+- name: upper_arm_link
+  mass: 12.93
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.3065
+  inertia:
+    ixx: 0.423074
+    iyy: 0.423074
+    izz: 0.0363656
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+- name: forearm_link
+  mass: 3.87
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.2855
+  inertia:
+    ixx: 0.11059
+    iyy: 0.11059
+    izz: 0.0108844
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+- name: wrist_1_link
+  mass: 1.96
+  center_of_mass:
+  - 0.0
+  - 0.135
+  - 0.0
+  inertia:
+    ixx: 0.0055125
+    iyy: 0.00510825
+    izz: 0.00510825
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+- name: wrist_2_link
+  mass: 1.96
+  center_of_mass:
+  - 0.0
+  - 0.0
+  - 0.12
+  inertia:
+    ixx: 0.0055125
+    iyy: 0.00510825
+    izz: 0.00510825
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+- name: wrist_3_link
+  mass: 0.202
+  center_of_mass:
+  - 0.0
+  - 0.092
+  - 0.0
+  inertia:
+    ixx: 0.000204525
+    iyy: 0.000144346
+    izz: 0.000144346
+    ixy: 0.0
+    ixz: 0.0
+    iyz: 0.0
+joints:
+- name: shoulder_pan_joint
+  type: continuous
+  parent_link: base
+  child_link: shoulder_link
+  pose:
+    position:
+    - 0.0
+    - 0.0
+    - 0.181
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 1.0
+  axis:
+  - 0.0
+  - 0.0
+  - 1.0
+- name: shoulder_lift_joint
+  type: continuous
+  parent_link: shoulder_link
+  child_link: upper_arm_link
+  pose:
+    position:
+    - 0.0
+    - 0.176
+    - 0.0
+    orientation:
+    - 0.0
+    - 1.0
+    - 0.0
+    - 1.0
+  axis:
+  - 0.0
+  - 1.0
+  - 0.0
+- name: elbow_joint
+  type: continuous
+  parent_link: upper_arm_link
+  child_link: forearm_link
+  pose:
+    position:
+    - 0.0
+    - -0.137
+    - 0.613
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 1.0
+  axis:
+  - 0.0
+  - 1.0
+  - 0.0
+- name: wrist_1_joint
+  type: continuous
+  parent_link: forearm_link
+  child_link: wrist_1_link
+  pose:
+    position:
+    - 0.0
+    - 0.0
+    - 0.571
+    orientation:
+    - 0.0
+    - 1.0
+    - 0.0
+    - 1.0
+  axis:
+  - 0.0
+  - 1.0
+  - 0.0
+- name: wrist_2_joint
+  type: continuous
+  parent_link: wrist_1_link
+  child_link: wrist_2_link
+  pose:
+    position:
+    - 0.0
+    - 0.135
+    - 0.0
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 1.0
+  axis:
+  - 0.0
+  - 0.0
+  - 1.0
+- name: wrist_3_joint
+  type: continuous
+  parent_link: wrist_2_link
+  child_link: wrist_3_link
+  pose:
+    position:
+    - 0.0
+    - 0.0
+    - 0.12
+    orientation:
+    - 0.0
+    - 0.0
+    - 0.0
+    - 1.0
+  axis:
+  - 0.0
+  - 1.0
+  - 0.0
+actuators: []
+sensors: []
+contacts: []
