@@ -28,16 +28,21 @@ from .schema import CommonSchema
 logger = logging.getLogger(__name__)
 
 
-def detect_format(file_path: Path) -> Optional[str]:
+def detect_format(file_path):
     """
-    Detect robot description format from file extension and content.
+    Detect the format of a robot description file based on extension and content.
     
     Args:
-        file_path: Path to the file to analyze
+        file_path: Path to the file to analyze (str or Path object)
         
     Returns:
         Format name string or None if format cannot be detected
     """
+    # Convert string to Path object if needed
+    if isinstance(file_path, str):
+        from pathlib import Path
+        file_path = Path(file_path)
+    
     if not file_path.exists():
         return None
     
