@@ -1,0 +1,29 @@
+# Core dependencies
+numpy>=1.20.0
+lxml>=4.6.0
+pyyaml>=5.4.0
+jsonschema>=3.2.0
+
+# CLI interface
+click>=8.0.0
+
+# Development dependencies
+pytest>=6.0
+pytest-cov>=2.10.0
+black>=21.0.0
+isort>=5.0.0
+flake8>=3.8.0
+mypy>=0.800
+pre-commit>=2.10.0
+
+# Documentation
+sphinx>=4.0.0
+sphinx-rtd-theme>=0.5.0
+sphinx-autodoc-typehints>=1.11.0
+
+# Build tools
+setuptools>=45
+wheel
+setuptools_scm[toml]>=6.2
+build
+twine
