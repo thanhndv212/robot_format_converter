@@ -225,3 +225,4 @@ robot_format_converter/_version.py
 test_outputs/
 temp_test_files/
 *.tmp
+tmp/

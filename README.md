@@ -89,26 +89,35 @@ robot-convert list-formats
 ### Python API
 
 **Basic Conversion:**
-```python
-from robot_format_converter import FormatConverter
+## Examples
 
-# Create converter instance
-converter = FormatConverter()
+The `examples/` directory contains comprehensive demonstrations:
 
-# Convert single file
-schema = converter.convert('robot.urdf', 'robot.sdf')
-print(f"Converted robot: {schema.metadata.name}")
-print(f"Links: {len(schema.links)}, Joints: {len(schema.joints)}")
-
-# Batch convert directory
-converted_files = converter.batch_convert(
-    'input_models/', 
-    'output_models/', 
-    'urdf', 
-    'sdf'
-)
-print(f"Converted {len(converted_files)} files")
+### Quick Start Demo
+```bash
+# Run the comprehensive demo showcasing all features
+python examples/comprehensive_demo.py
 ```
+
+### Individual Examples
+```bash
+# UR10 URDF conversion example using real robot data
+python examples/ur10_conversion_example.py
+
+# Schema conversion and round-trip testing
+python examples/schema_conversion_example.py  
+
+# Batch processing multiple files
+python examples/batch_conversion_example.py
+
+# CLI interface usage examples
+python examples/cli_usage_examples.py
+```
+
+### Example Robot Data
+- `examples/ur_description/` - Complete UR10 robot description package
+- `examples/proper_example_schema.yaml` - Example robot in common schema format
+- `examples/demo_outputs/` - Generated conversion outputs
 
 **Advanced Usage:**
 ```python
