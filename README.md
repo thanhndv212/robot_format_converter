@@ -116,7 +116,7 @@ python examples/cli_usage_examples.py
 
 ### Example Robot Data
 - `examples/ur_description/` - Complete UR10 robot description package
-- `examples/proper_example_schema.yaml` - Example robot in common schema format
+- `examples/example_schema.yaml` - Example robot in common schema format
 - `examples/demo_outputs/` - Generated conversion outputs
 
 **Advanced Usage:**

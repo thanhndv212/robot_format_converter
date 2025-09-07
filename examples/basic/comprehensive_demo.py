@@ -131,7 +131,7 @@ def demonstrate_schema_conversion():
     """Demonstrate custom schema conversion."""
     print_section("Custom Schema Conversion", 2)
     
-    example_schema = Path(__file__).parent / "proper_example_schema.yaml"
+    example_schema = Path(__file__).parent / "example_schema.yaml"
     
     if not example_schema.exists():
         print("Example schema not found, skipping this demonstration")

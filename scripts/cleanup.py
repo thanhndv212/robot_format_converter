@@ -55,7 +55,7 @@ def cleanup_project():
     # Specific files to remove
     specific_files = [
         "examples/ur_description",  # Redundant with universal_robots_ur10e
-        "examples/example_schema.yaml",  # Use proper_example_schema.yaml
+        "examples/example_schema.yaml",  # Use example_schema.yaml
         "examples/basic_conversion.py",  # Superseded by enhanced_conversion_demo.py
         "examples/mjcf_conversion_example.py",  # Integrated into comprehensive examples
         "examples/mjcf_batch_conversion.py",  # Integrated into enhanced demo
@@ -120,7 +120,7 @@ def organize_examples():
             "ur10_conversion_example.py"
         ],
         "config/": [
-            "proper_example_schema.yaml"
+            "example_schema.yaml"
         ]
     }
     
