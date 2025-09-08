@@ -1,0 +1,1042 @@
+# Comprehensive Robot Schema Configuration
+# Complete specification showing all available features and options
+# This schema demonstrates the full capabilities of the robot format converter
+
+metadata:
+  # Basic robot information
+  name: comprehensive_demo_robot
+  version: "2.0.0"
+  author: Robot Format Converter Team
+  description: "Comprehensive demonstration robot showing all schema features"
+  source_format: schema
+  created_date: "2025-09-07"
+  
+  # Advanced metadata
+  license: MIT
+  contact_info: "robotics@example.com"
+  website: "https://github.com/robot-format-converter"
+  
+  # Documentation references
+  documentation:
+    user_manual: "docs/user_guide.md"
+    api_reference: "docs/api_reference.md"
+    examples: "examples/"
+  
+  # Schema validation
+  schema_version: "2.0"
+  validation_level: strict
+  
+  # Format-specific extensions
+  extensions:
+    urdf:
+      version: "1.0"
+      xmlns: "http://www.ros.org/wiki/urdf"
+    mjcf:
+      compiler_settings:
+        angle: "radian"
+        meshdir: "meshes/"
+        balanceinertia: true
+        strippath: false
+    sdf:
+      version: "1.7"
+      world_name: "robot_world"
+
+# Assets and Resources
+assets:
+  # Mesh files
+  meshes:
+    - name: base_mesh
+      file: "meshes/base_link.stl"
+      scale: [1.0, 1.0, 1.0]
+      format: "stl"
+      convex: false
+    - name: arm_mesh
+      file: "meshes/arm_link.obj"
+      scale: [1.0, 1.0, 1.0]
+      format: "obj" 
+      convex: true
+    - name: gripper_mesh
+      file: "meshes/gripper.dae"
+      scale: [0.001, 0.001, 0.001]  # Convert mm to m
+      format: "collada"
+      convex: false
+
+  # Materials and textures
+  materials:
+    - name: aluminum
+      visual:
+        color: [0.7, 0.7, 0.8, 1.0]  # RGBA
+        ambient: [0.3, 0.3, 0.3, 1.0]
+        diffuse: [0.7, 0.7, 0.8, 1.0] 
+        specular: [1.0, 1.0, 1.0, 1.0]
+        shininess: 150
+        metallic: 0.8
+        roughness: 0.3
+      physical:
+        friction: [1.2, 1.2, 0.01]  # mu1, mu2, slip
+        density: 2700.0  # kg/m³
+        restitution: 0.3
+        stiffness: 1e6
+        damping: 1e3
+        
+    - name: plastic_black
+      visual:
+        color: [0.1, 0.1, 0.1, 1.0]
+        texture: "textures/plastic.png"
+        texture_type: "2d"
+        metallic: 0.0
+        roughness: 0.7
+      physical:
+        friction: [0.8, 0.8, 0.02]
+        density: 1200.0
+        restitution: 0.1
+        
+    - name: rubber_grip
+      visual:
+        color: [0.2, 0.2, 0.2, 1.0]
+        roughness: 0.9
+        metallic: 0.0
+      physical:
+        friction: [1.8, 1.8, 0.001]  # High friction for gripping
+        density: 900.0
+        restitution: 0.8  # Bouncy rubber
+        
+  # Textures
+  textures:
+    - name: metal_texture
+      file: "textures/brushed_metal.jpg"
+      type: "2d"
+      wrap: [true, true]
+      filter: "trilinear"
+    - name: plastic_texture  
+      file: "textures/plastic_surface.png"
+      type: "2d"
+      wrap: [false, false]
+      
+  # Height maps (for terrain/complex surfaces)
+  heightmaps:
+    - name: terrain_map
+      file: "heightmaps/rough_terrain.png"
+      size: [10.0, 10.0, 1.0]  # x, y, max_height
+
+# Robot Links Definition
+links:
+  # Base link - fixed foundation
+  - name: base_link
+    mass: 15.0
+    center_of_mass: [0.0, 0.0, 0.05]
+    inertia:
+      ixx: 2.5
+      iyy: 2.5  
+      izz: 1.2
+      ixy: 0.0
+      ixz: 0.0
+      iyz: 0.0
+    
+    # Visual representation
+    visual:
+      - name: base_visual
+        pose:
+          position: [0.0, 0.0, 0.0]
+          orientation: [0.0, 0.0, 0.0, 1.0]  # Quaternion w,x,y,z
+        geometry:
+          type: mesh
+          mesh:
+            filename: base_mesh
+            scale: [1.0, 1.0, 1.0]
+        material: aluminum
+        
+    # Collision representation  
+    collision:
+      - name: base_collision
+        pose:
+          position: [0.0, 0.0, 0.0]
+          orientation: [0.0, 0.0, 0.0, 1.0]
+        geometry:
+          type: box
+          box:
+            size: [0.4, 0.4, 0.1]
+        surface_properties:
+          friction: [1.2, 1.2, 0.01]
+          restitution: 0.3
+          stiffness: 1e6
+          damping: 1e3
+            
+  # Shoulder link - first rotating joint
+  - name: shoulder_link
+    mass: 8.0
+    center_of_mass: [0.0, 0.0, 0.12]
+    inertia:
+      ixx: 0.8
+      iyy: 0.8
+      izz: 0.4
+      ixy: 0.0
+      ixz: 0.0 
+      iyz: 0.0
+      
+    visual:
+      - name: shoulder_visual
+        geometry:
+          type: cylinder
+          cylinder:
+            radius: 0.06
+            length: 0.2
+        material: aluminum
+        
+    collision:
+      - name: shoulder_collision
+        geometry:
+          type: cylinder
+          cylinder:
+            radius: 0.06
+            length: 0.2
+            
+  # Upper arm link
+  - name: upper_arm_link
+    mass: 5.0
+    center_of_mass: [0.0, 0.0, 0.25]
+    inertia:
+      ixx: 0.5
+      iyy: 0.5
+      izz: 0.1
+      ixy: 0.0
+      ixz: 0.0
+      iyz: 0.0
+      
+    visual:
+      - name: upper_arm_visual
+        geometry:
+          type: box
+          box:
+            size: [0.1, 0.08, 0.5]
+        material: aluminum
+        
+    collision:
+      - name: upper_arm_collision
+        geometry:
+          type: box
+          box:
+            size: [0.1, 0.08, 0.5]
+            
+  # Forearm link  
+  - name: forearm_link
+    mass: 3.0
+    center_of_mass: [0.0, 0.0, 0.15]
+    inertia:
+      ixx: 0.3
+      iyy: 0.3
+      izz: 0.05
+      ixy: 0.0
+      ixz: 0.0
+      iyz: 0.0
+      
+    visual:
+      - name: forearm_visual
+        geometry:
+          type: box
+          box:
+            size: [0.08, 0.06, 0.3]
+        material: aluminum
+        
+    collision:
+      - name: forearm_collision
+        geometry:
+          type: box
+          box:
+            size: [0.08, 0.06, 0.3]
+            
+  # Wrist link
+  - name: wrist_link
+    mass: 1.5
+    center_of_mass: [0.0, 0.0, 0.04]
+    inertia:
+      ixx: 0.01
+      iyy: 0.01
+      izz: 0.01
+      ixy: 0.0
+      ixz: 0.0
+      iyz: 0.0
+      
+    visual:
+      - name: wrist_visual
+        geometry:
+          type: cylinder
+          cylinder:
+            radius: 0.03
+            length: 0.08
+        material: aluminum
+        
+    collision:
+      - name: wrist_collision
+        geometry:
+          type: cylinder
+          cylinder:
+            radius: 0.03
+            length: 0.08
+            
+  # End effector/gripper links
+  - name: gripper_base_link
+    mass: 0.8
+    center_of_mass: [0.0, 0.0, 0.02]
+    inertia:
+      ixx: 0.001
+      iyy: 0.001
+      izz: 0.001
+      ixy: 0.0
+      ixz: 0.0
+      iyz: 0.0
+      
+    visual:
+      - name: gripper_base_visual
+        geometry:
+          type: box
+          box:
+            size: [0.08, 0.04, 0.04]
+        material: plastic_black
+        
+    collision:
+      - name: gripper_base_collision
+        geometry:
+          type: box
+          box:
+            size: [0.08, 0.04, 0.04]
+            
+  - name: gripper_finger1_link
+    mass: 0.1
+    center_of_mass: [0.02, 0.0, 0.0]
+    inertia:
+      ixx: 0.0001
+      iyy: 0.0001
+      izz: 0.0001
+      ixy: 0.0
+      ixz: 0.0
+      iyz: 0.0
+      
+    visual:
+      - name: finger1_visual
+        geometry:
+          type: box
+          box:
+            size: [0.04, 0.01, 0.02]
+        material: rubber_grip
+        
+    collision:
+      - name: finger1_collision
+        geometry:
+          type: box
+          box:
+            size: [0.04, 0.01, 0.02]
+        surface_properties:
+          friction: [1.8, 1.8, 0.001]  # High grip friction
+          
+  - name: gripper_finger2_link
+    mass: 0.1
+    center_of_mass: [0.02, 0.0, 0.0]
+    inertia:
+      ixx: 0.0001
+      iyy: 0.0001
+      izz: 0.0001
+      ixy: 0.0
+      ixz: 0.0
+      iyz: 0.0
+      
+    visual:
+      - name: finger2_visual
+        geometry:
+          type: box
+          box:
+            size: [0.04, 0.01, 0.02]
+        material: rubber_grip
+        
+    collision:
+      - name: finger2_collision
+        geometry:
+          type: box
+          box:
+            size: [0.04, 0.01, 0.02]
+        surface_properties:
+          friction: [1.8, 1.8, 0.001]
+
+# Joint Definitions
+joints:
+  # Main robot arm joints
+  - name: shoulder_yaw_joint
+    type: revolute
+    parent_link: base_link
+    child_link: shoulder_link
+    pose:
+      position: [0.0, 0.0, 0.1]
+      orientation: [0.0, 0.0, 0.0, 1.0]
+    axis: [0.0, 0.0, 1.0]
+    limits:
+      lower: -3.14159
+      upper: 3.14159
+      effort: 100.0
+      velocity: 2.0
+      acceleration: 5.0
+      jerk: 20.0
+    dynamics:
+      damping: 0.5
+      friction: 0.2
+      spring_stiffness: 0.0
+      spring_reference: 0.0
+      inertia: 0.01
+    safety_controller:
+      k_position: 100.0
+      k_velocity: 10.0
+      soft_lower_limit: -3.0
+      soft_upper_limit: 3.0
+    calibration:
+      rising: 0.0
+      falling: 0.0
+      
+  - name: shoulder_pitch_joint
+    type: revolute
+    parent_link: shoulder_link
+    child_link: upper_arm_link
+    pose:
+      position: [0.0, 0.0, 0.2]
+      orientation: [0.0, 0.0, 0.0, 1.0]
+    axis: [1.0, 0.0, 0.0]
+    limits:
+      lower: -1.57
+      upper: 1.57
+      effort: 80.0
+      velocity: 1.5
+      acceleration: 4.0
+    dynamics:
+      damping: 0.4
+      friction: 0.15
+      
+  - name: elbow_joint
+    type: revolute  
+    parent_link: upper_arm_link
+    child_link: forearm_link
+    pose:
+      position: [0.0, 0.0, 0.5]
+      orientation: [0.0, 0.0, 0.0, 1.0]
+    axis: [1.0, 0.0, 0.0]
+    limits:
+      lower: -2.61799
+      upper: 0.0
+      effort: 50.0
+      velocity: 2.0
+      acceleration: 6.0
+    dynamics:
+      damping: 0.3
+      friction: 0.1
+      
+  - name: wrist_yaw_joint
+    type: revolute
+    parent_link: forearm_link  
+    child_link: wrist_link
+    pose:
+      position: [0.0, 0.0, 0.3]
+      orientation: [0.0, 0.0, 0.0, 1.0]
+    axis: [0.0, 0.0, 1.0]
+    limits:
+      lower: -3.14159
+      upper: 3.14159
+      effort: 20.0
+      velocity: 3.0
+      acceleration: 8.0
+    dynamics:
+      damping: 0.1
+      friction: 0.05
+      
+  - name: wrist_pitch_joint
+    type: revolute
+    parent_link: wrist_link
+    child_link: gripper_base_link
+    pose:
+      position: [0.0, 0.0, 0.08]
+      orientation: [0.0, 0.0, 0.0, 1.0]
+    axis: [1.0, 0.0, 0.0]
+    limits:
+      lower: -1.57
+      upper: 1.57
+      effort: 20.0
+      velocity: 3.0
+      acceleration: 8.0
+    dynamics:
+      damping: 0.1
+      friction: 0.05
+      
+  # Gripper joints
+  - name: gripper_finger1_joint
+    type: prismatic
+    parent_link: gripper_base_link
+    child_link: gripper_finger1_link
+    pose:
+      position: [0.02, 0.015, 0.0]
+      orientation: [0.0, 0.0, 0.0, 1.0]
+    axis: [0.0, 1.0, 0.0]
+    limits:
+      lower: 0.0
+      upper: 0.04
+      effort: 10.0
+      velocity: 0.1
+      acceleration: 1.0
+    dynamics:
+      damping: 0.01
+      friction: 0.01
+      
+  - name: gripper_finger2_joint
+    type: prismatic
+    parent_link: gripper_base_link
+    child_link: gripper_finger2_link
+    pose:
+      position: [0.02, -0.015, 0.0]
+      orientation: [0.0, 0.0, 0.0, 1.0]
+    axis: [0.0, -1.0, 0.0]  # Opposite direction for mirrored motion
+    limits:
+      lower: 0.0
+      upper: 0.04
+      effort: 10.0
+      velocity: 0.1
+      acceleration: 1.0
+    dynamics:
+      damping: 0.01
+      friction: 0.01
+      
+  # Additional joint types demonstration
+  - name: demo_continuous_joint
+    type: continuous
+    parent_link: base_link
+    child_link: base_link  # Self-reference for demo
+    pose:
+      position: [0.0, 0.0, 0.0]
+      orientation: [0.0, 0.0, 0.0, 1.0]
+    axis: [0.0, 0.0, 1.0]
+    limits:
+      effort: 1.0
+      velocity: 1.0
+    dynamics:
+      damping: 0.01
+    enabled: false  # Disabled for actual use
+    
+  - name: demo_fixed_joint
+    type: fixed
+    parent_link: wrist_link
+    child_link: wrist_link  # Self-reference for demo
+    pose:
+      position: [0.0, 0.0, 0.0]
+      orientation: [0.0, 0.0, 0.0, 1.0]
+    enabled: false  # Disabled for actual use
+
+# Actuators and Motors
+actuators:
+  # Position-controlled actuators
+  - name: shoulder_yaw_motor
+    type: position
+    joint: shoulder_yaw_joint
+    gear_ratio: 100.0
+    control_range: [-1.0, 1.0]
+    force_range: [-100.0, 100.0]
+    length_range: null  # Not applicable for rotary
+    bias: 0.0
+    gain_position: 1000.0
+    gain_velocity: 100.0
+    time_constant: 0.01
+    integration_time_limit: 0.1
+    
+  - name: shoulder_pitch_motor  
+    type: position
+    joint: shoulder_pitch_joint
+    gear_ratio: 80.0
+    control_range: [-1.0, 1.0]
+    force_range: [-80.0, 80.0]
+    gain_position: 800.0
+    gain_velocity: 80.0
+    time_constant: 0.01
+    
+  - name: elbow_motor
+    type: position
+    joint: elbow_joint
+    gear_ratio: 60.0
+    control_range: [-1.0, 1.0] 
+    force_range: [-50.0, 50.0]
+    gain_position: 500.0
+    gain_velocity: 50.0
+    time_constant: 0.01
+    
+  # Velocity-controlled actuators
+  - name: wrist_yaw_motor
+    type: velocity
+    joint: wrist_yaw_joint
+    gear_ratio: 20.0
+    control_range: [-3.0, 3.0]  # rad/s
+    force_range: [-20.0, 20.0]
+    gain_velocity: 10.0
+    time_constant: 0.005
+    
+  - name: wrist_pitch_motor
+    type: velocity
+    joint: wrist_pitch_joint
+    gear_ratio: 20.0
+    control_range: [-3.0, 3.0]
+    force_range: [-20.0, 20.0]
+    gain_velocity: 10.0
+    time_constant: 0.005
+    
+  # Force/torque-controlled actuators  
+  - name: gripper_finger1_actuator
+    type: force
+    joint: gripper_finger1_joint
+    gear_ratio: 10.0
+    control_range: [0.0, 10.0]  # Force in N
+    force_range: [0.0, 10.0]
+    bias: 0.0
+    gain_force: 1.0
+    time_constant: 0.001
+    
+  - name: gripper_finger2_actuator
+    type: force  
+    joint: gripper_finger2_joint
+    gear_ratio: 10.0
+    control_range: [0.0, 10.0]
+    force_range: [0.0, 10.0]
+    bias: 0.0
+    gain_force: 1.0
+    time_constant: 0.001
+    
+  # Advanced actuator types
+  - name: demo_cylinder_actuator
+    type: cylinder  # Pneumatic/hydraulic cylinder
+    joint: elbow_joint
+    gear_ratio: 1.0
+    control_range: [-1.0, 1.0]
+    force_range: [-200.0, 200.0]  # High force capability
+    length_range: [0.3, 0.7]  # Cylinder stroke
+    time_constant: 0.02  # Slower response
+    enabled: false  # For demonstration only
+    
+  - name: demo_muscle_actuator
+    type: muscle  # Artificial muscle actuator
+    joint: shoulder_pitch_joint
+    gear_ratio: 1.0
+    control_range: [0.0, 1.0]  # Activation level
+    force_range: [0.0, 500.0]
+    length_range: [0.8, 1.2]  # Contraction ratio
+    time_constant: 0.05
+    enabled: false
+
+# Sensors
+sensors:
+  # Joint state sensors
+  - name: shoulder_yaw_encoder
+    type: position
+    parent_link: shoulder_link
+    joint: shoulder_yaw_joint
+    noise_std: 0.001  # radians
+    update_rate: 1000.0  # Hz
+    range: [-3.15, 3.15]
+    resolution: 0.0001
+    
+  - name: shoulder_pitch_encoder
+    type: position
+    parent_link: upper_arm_link
+    joint: shoulder_pitch_joint
+    noise_std: 0.001
+    update_rate: 1000.0
+    range: [-1.58, 1.58]
+    resolution: 0.0001
+    
+  - name: elbow_encoder
+    type: position
+    parent_link: forearm_link
+    joint: elbow_joint
+    noise_std: 0.001
+    update_rate: 1000.0
+    range: [-2.62, 0.01]
+    resolution: 0.0001
+    
+  # Velocity sensors  
+  - name: wrist_yaw_tachometer
+    type: velocity
+    parent_link: wrist_link
+    joint: wrist_yaw_joint
+    noise_std: 0.01  # rad/s
+    update_rate: 500.0
+    range: [-10.0, 10.0]
+    resolution: 0.001
+    
+  # Force/torque sensors
+  - name: wrist_force_sensor
+    type: force_torque
+    parent_link: wrist_link
+    pose:
+      position: [0.0, 0.0, 0.04]
+      orientation: [0.0, 0.0, 0.0, 1.0]
+    noise_std: [0.1, 0.1, 0.1, 0.01, 0.01, 0.01]  # Fx,Fy,Fz,Tx,Ty,Tz
+    update_rate: 1000.0
+    force_range: [-100.0, 100.0]
+    torque_range: [-10.0, 10.0]
+    
+  - name: gripper_force_sensor1
+    type: touch
+    parent_link: gripper_finger1_link
+    pose:
+      position: [0.02, 0.0, 0.0]
+      orientation: [0.0, 0.0, 0.0, 1.0]
+    noise_std: 0.01  # N
+    update_rate: 500.0
+    force_range: [0.0, 20.0]
+    
+  # Inertial sensors
+  - name: base_imu
+    type: imu
+    parent_link: base_link
+    pose:
+      position: [0.0, 0.0, 0.05]
+      orientation: [0.0, 0.0, 0.0, 1.0]
+    noise_std: 
+      acceleration: [0.01, 0.01, 0.01]  # m/s²
+      angular_velocity: [0.001, 0.001, 0.001]  # rad/s
+      magnetometer: [0.1, 0.1, 0.1]  # μT
+    update_rate: 100.0
+    acceleration_range: [-50.0, 50.0]
+    gyro_range: [-10.0, 10.0]
+    
+  # Vision sensors
+  - name: wrist_camera
+    type: camera
+    parent_link: wrist_link
+    pose:
+      position: [0.0, -0.05, 0.04]
+      orientation: [0.0, 0.0, -0.7071, 0.7071]  # Looking forward
+    resolution: [640, 480]
+    field_of_view: [1.0472, 0.7854]  # 60deg horizontal, 45deg vertical (radians)
+    near_clip: 0.01
+    far_clip: 10.0
+    update_rate: 30.0
+    format: "rgb8"
+    
+  - name: base_lidar
+    type: lidar
+    parent_link: base_link
+    pose:
+      position: [0.0, 0.0, 0.1]
+      orientation: [0.0, 0.0, 0.0, 1.0]
+    angular_range: [-3.14159, 3.14159]  # 360 degrees
+    angular_resolution: 0.00436  # ~0.25 degrees
+    range_min: 0.1
+    range_max: 10.0
+    range_resolution: 0.01
+    noise_std: 0.01
+    update_rate: 10.0
+    
+  # Specialized sensors
+  - name: gripper_proximity_sensor
+    type: proximity
+    parent_link: gripper_base_link
+    pose:
+      position: [0.04, 0.0, 0.0]
+      orientation: [0.0, 0.0, 0.0, 1.0]
+    range: [0.001, 0.1]
+    noise_std: 0.0001
+    update_rate: 100.0
+    
+  - name: joint_current_sensor
+    type: current
+    parent_link: shoulder_link
+    joint: shoulder_yaw_joint
+    noise_std: 0.01  # Amperes
+    update_rate: 1000.0
+    range: [-10.0, 10.0]
+
+# Contact Surfaces and Collision Properties  
+contacts:
+  # Ground contact
+  - name: base_ground_contact
+    link1: base_link
+    link2: ground
+    surface_properties:
+      friction: [1.0, 1.0, 0.01]
+      restitution: 0.1
+      stiffness: 1e6
+      damping: 1e3
+      margin: 0.001
+      
+  # Gripper object contact
+  - name: gripper_object_contact
+    link1: gripper_finger1_link
+    link2: "*"  # Any object
+    surface_properties:
+      friction: [1.8, 1.8, 0.001]  # High friction for gripping
+      restitution: 0.2
+      stiffness: 5e5
+      damping: 5e2
+      margin: 0.0001
+      
+  - name: gripper2_object_contact
+    link1: gripper_finger2_link  
+    link2: "*"
+    surface_properties:
+      friction: [1.8, 1.8, 0.001]
+      restitution: 0.2
+      stiffness: 5e5
+      damping: 5e2
+      margin: 0.0001
+      
+  # Self-collision exclusions
+  - name: adjacent_link_exclusion
+    link1: base_link
+    link2: shoulder_link
+    type: exclude  # Exclude these from collision detection
+    
+  - name: gripper_exclusion
+    link1: gripper_finger1_link
+    link2: gripper_finger2_link  
+    type: exclude
+
+# Environment and World Settings
+environment:
+  # Global physics settings
+  physics:
+    gravity: [0.0, 0.0, -9.81]
+    timestep: 0.001
+    solver_iterations: 50
+    solver_type: "Newton"
+    tolerance: 1e-10
+    
+  # Default contact settings
+  default_contact:
+    friction: [1.0, 1.0, 0.01]
+    restitution: 0.3
+    stiffness: 1e6
+    damping: 1e3
+    margin: 0.001
+    
+  # Visual settings  
+  visual:
+    background_color: [0.2, 0.3, 0.4, 1.0]
+    ambient_light: [0.4, 0.4, 0.4, 1.0]
+    shadows: true
+    reflections: true
+    
+  # Lighting
+  lights:
+    - name: sun
+      type: directional
+      direction: [0.3, 0.3, -1.0]
+      color: [1.0, 0.95, 0.8, 1.0]
+      intensity: 1.0
+      cast_shadows: true
+      
+    - name: fill_light
+      type: ambient
+      color: [0.3, 0.3, 0.3, 1.0]
+      intensity: 0.3
+      
+  # Ground/floor
+  ground:
+    enabled: true
+    size: [20.0, 20.0]
+    height: 0.0
+    material: 
+      color: [0.5, 0.5, 0.5, 1.0] 
+      texture: "textures/concrete.jpg"
+      friction: [1.0, 1.0, 0.01]
+
+# Format-specific Extensions and Options
+format_specific:
+  # URDF-specific settings
+  urdf:
+    # Package references
+    packages:
+      - name: "robot_description" 
+        path: "package://robot_description"
+        
+    # Transmission definitions for ROS control
+    transmissions:
+      - name: shoulder_yaw_transmission
+        type: "transmission_interface/SimpleTransmission"
+        joint: shoulder_yaw_joint
+        actuator: shoulder_yaw_motor
+        hardware_interface: "hardware_interface/PositionJointInterface"
+        reduction: 100.0
+        
+    # Gazebo-specific elements
+    gazebo:
+      - link: base_link
+        properties:
+          material: "Gazebo/Blue"
+          mu1: 1.0
+          mu2: 1.0
+          kp: 1e6
+          kd: 1e3
+          
+  # MJCF-specific settings  
+  mjcf:
+    # Compiler options
+    compiler:
+      angle: "radian"
+      coordinate: "local"
+      eulerseq: "xyz" 
+      meshdir: "meshes/"
+      texturedir: "textures/"
+      balanceinertia: true
+      boundmass: 0.001
+      boundinertia: 0.001
+      
+    # Solver options
+    option:
+      timestep: 0.001
+      iterations: 50
+      solver: "Newton"
+      tolerance: 1e-10
+      cone: "pyramidal"
+      jacobian: "sparse"
+      
+    # Default properties
+    defaults:
+      joint:
+        armature: 0.01
+        damping: 0.1
+        stiffness: 0.0
+        limited: true
+      geom:
+        friction: [1.0, 0.1, 0.01]
+        condim: 3
+        contype: 1
+        conaffinity: 1
+      motor:
+        ctrllimited: true
+        
+    # MuJoCo-specific elements
+    equality:  # Constraint definitions
+      - name: gripper_constraint
+        type: connect
+        body1: gripper_finger1_link
+        body2: gripper_finger2_link
+        anchor: [0.0, 0.0, 0.0]
+        
+    tendon:  # Cable/tendon routing
+      - name: gripper_tendon
+        type: spatial
+        width: 0.001
+        limited: true  
+        range: [0.0, 0.08]
+        sites: ["grip_site1", "grip_site2"]
+        
+    site:  # Reference points
+      - name: grip_site1
+        parent: gripper_finger1_link
+        pos: [0.02, 0.0, 0.0]
+        size: [0.001]
+      - name: grip_site2  
+        parent: gripper_finger2_link
+        pos: [0.02, 0.0, 0.0]
+        size: [0.001]
+        
+  # SDF-specific settings
+  sdf:
+    version: "1.7"
+    
+    # World settings
+    world:
+      name: "robot_world"
+      audio:
+        device: "default"
+      wind:
+        linear_velocity: [0.0, 0.0, 0.0]
+        
+    # Plugin configurations  
+    plugins:
+      - name: "gazebo_ros_control"
+        filename: "libgazebo_ros_control.so"
+        parameters:
+          robotNamespace: "/"
+          robotSimType: "gazebo_ros_control/DefaultRobotHWSim"
+          
+  # Custom format extensions
+  custom:
+    # Robot-specific metadata
+    robot_class: "manipulator"
+    workspace_volume: 2.5  # m³
+    payload_capacity: 5.0  # kg
+    repeatability: 0.1  # mm
+    
+    # Calibration data
+    calibration:
+      kinematic_parameters:
+        d1: 0.1
+        a2: 0.5
+        a3: 0.3
+        d4: 0.08
+      dynamic_parameters:
+        friction_coefficients: [0.2, 0.15, 0.1, 0.05, 0.05]
+        
+    # Safety systems
+    safety:
+      emergency_stops: ["hardware", "software"]
+      collision_detection: true
+      force_limiting: true
+      workspace_monitoring: true
+      
+    # Maintenance information
+    maintenance:
+      service_intervals:
+        lubrication: 2000  # hours
+        calibration: 8760  # hours (1 year)
+        overhaul: 17520   # hours (2 years)
+      wear_parts: ["gripper_pads", "joint_bearings"]
+
+# Validation and Quality Assurance
+validation:
+  # Schema validation rules
+  structural:
+    require_root_link: true
+    check_kinematic_loops: true  
+    validate_mass_properties: true
+    check_joint_limits: true
+    
+  # Physical validation
+  physical:
+    mass_distribution_check: true
+    inertia_matrix_validation: true
+    joint_range_validation: true
+    collision_geometry_check: true
+    
+  # Performance validation  
+  performance:
+    condition_number_threshold: 100.0
+    manipulability_threshold: 0.01
+    workspace_coverage_minimum: 0.8
+
+# Documentation and Metadata
+documentation:
+  description: |
+    This comprehensive robot schema demonstrates all features supported by the 
+    robot format converter. It includes:
+    
+    - Complete link and joint definitions with full property specifications
+    - Advanced material and visual properties
+    - Comprehensive sensor and actuator definitions  
+    - Contact surface properties and collision settings
+    - Environment and world configuration
+    - Format-specific extensions for URDF, MJCF, and SDF
+    - Validation rules and quality assurance settings
+    
+    This schema can be used as a reference for creating robot descriptions
+    that take advantage of all available features while maintaining 
+    compatibility across different robot simulation and control frameworks.
+    
+  usage_notes:
+    - All units follow SI conventions (meters, radians, kilograms, seconds)
+    - Coordinate frames use right-handed conventions
+    - Quaternions are specified as [w, x, y, z]
+    - Color values are RGBA in range [0.0, 1.0]
+    - Joint limits should include safety margins
+    - Collision geometries should be simpler than visual geometries
+    
+  version_history:
+    - "2.0.0": Complete schema with all advanced features
+    - "1.5.0": Added sensor and actuator definitions  
+    - "1.0.0": Basic link and joint definitions
+    
+  references:
+    - "URDF Specification: http://wiki.ros.org/urdf/XML"
+    - "MJCF Documentation: https://mujoco.readthedocs.io/en/latest/XMLreference.html"
+    - "SDF Specification: http://sdformat.org/"
